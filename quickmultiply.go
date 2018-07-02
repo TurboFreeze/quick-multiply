@@ -7,7 +7,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	// "time"
+	"time"
 )
 
 func main() {
@@ -20,15 +20,23 @@ func main() {
 
 		// Reading input
 		fmt.Printf("%d x %d = ", num_first, num_second)
+
+		// Begin timer
+		start_time := time.Now()
+
 		reader := bufio.NewReader(os.Stdin)
 		ans, _ := reader.ReadString('\n')
 		ans_int, err := strconv.Atoi(strings.TrimSpace(ans))
 		if err != nil {
 			fmt.Println("Invalid input, must be integer")
 		} else {
+			// End timer
+			end_time := time.Now()
+			elapsed := end_time.Sub(start_time)
+
 			// Check answer
 			if prod == ans_int {
-				fmt.Println("Correct.")
+				fmt.Printf("Correct. It took %.2f seconds.\n", elapsed.Seconds())
 			} else {
 				fmt.Printf("Incorrect. The actual answer is %d.\n", prod)
 			}
