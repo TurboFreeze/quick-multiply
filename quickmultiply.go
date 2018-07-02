@@ -11,6 +11,19 @@ import (
 )
 
 func main() {
+	// ANSI sequences
+	ANSI_END := "\033[0m"
+	ANSI_RED := "\033[31m"
+	ANSI_GREEN := "\033[32m"
+	ANSI_YELLOW := "\033[33m"
+
+	// Seed RNG
+	rand.Seed(time.Now().UTC().UnixNano())
+
+	fmt.Println("*****************************")
+	fmt.Println("* WELCOME TO QUICK MULTIPLY *")
+	fmt.Println("*****************************")
+
 	// Continuous loop
 	for true {
 		// Numbers generated
@@ -28,7 +41,7 @@ func main() {
 		ans, _ := reader.ReadString('\n')
 		ans_int, err := strconv.Atoi(strings.TrimSpace(ans))
 		if err != nil {
-			fmt.Println("Invalid input, must be integer")
+			fmt.Printf("%sSKIPPING%s due to invalid input, must be integer.\n", ANSI_YELLOW, ANSI_END)
 		} else {
 			// End timer
 			end_time := time.Now()
@@ -36,11 +49,13 @@ func main() {
 
 			// Check answer
 			if prod == ans_int {
-				fmt.Printf("Correct. It took %.2f seconds.\n", elapsed.Seconds())
+				fmt.Printf("%sCORRECT%s. It took %.2f seconds.\n", ANSI_GREEN, ANSI_END, elapsed.Seconds())
 			} else {
-				fmt.Printf("Incorrect. The actual answer is %d.\n", prod)
+				fmt.Printf("%sINCORRECT%s. The actual answer is %d.\n", ANSI_RED, ANSI_END, prod)
 			}
 		}
+
+		fmt.Println("*****************************")
 	}
 
 }
